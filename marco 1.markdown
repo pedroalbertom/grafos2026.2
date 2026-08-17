@@ -1,46 +1,92 @@
-message route
+# Problema C — Message Route
 
-Syrjälä's network has n computers and m connections. Your task is to find out if Uolevi can send a message to Maija, and if it is possible, what is the minimum number of computers on such a route.
-Input
-The first input line has two integers n and m: the number of computers and connections. The computers are numbered 1,2,\dots,n. Uolevi's computer is 1 and Maija's computer is n.
-Then, there are m lines describing the connections. Each line has two integers a and b: there is a connection between those computers.
-Every connection is between two different computers, and there is at most one connection between any two computers.
-Output
-If it is possible to send a message, first print k: the minimum number of computers on a valid route. After this, print an example of such a route. You can print any valid solution.
-If there are no routes, print "IMPOSSIBLE".
+A rede de Syrjälä possui $n$ computadores e $m$ conexões. A tarefa é descobrir se Uolevi consegue enviar uma mensagem para Maija e, caso seja possível, qual o número mínimo de computadores em uma rota válida.
 
-precisamos gerar esse artefato descrevendo as seguintes caracteristicas desse grafo/problema
+## Entrada
 
-Marco 1 — Modelagem
+A primeira linha contém dois inteiros $n$ e $m$: o número de computadores e o número de conexões. Os computadores são numerados $1, 2, \dots, n$. O computador de Uolevi é $1$ e o de Maija é $n$.
 
-enunciado:
- O PPROBLEMA CONSISTE EM DESCOBRIR SE É POSSIVEL ENVIAR UMA MENSAGEM DE UM COMPUTADOR A PARA B E, CASO SEJA, DESCOBRIR OS NUMEROS DE COMPUTADORES E AS ROTAS 
-entrada:
- 3 entradas: n eh o numero de computadores, m eh o numero de conexoes e a lista de conexoes entre os computadores.
-saida:
- k o numero minimo de computadores numa rota valida e um exemplo de rota valida. se nao houver rota valida, printar impossible
-restricoes:
- minimo de computadores = 2; maximo de computadores: 10⁵
- numero de conexoes vai de 1 a 2*10⁵
- 1 <= a, b <= n, a e b sao computadores e sempre vao estar entre 1 e n
+Em seguida, há $m$ linhas descrevendo as conexões. Cada linha contém dois inteiros $a$ e $b$: existe uma conexão entre esses computadores.
 
-vértices:
- computadores
-arestas:
- conexoes entre os computadores
-tipo de grafo:
- grafo simples, pois a conexao nao eh direcionada, nao existem laços nem arestas paralelas.
-instancia pequena:
+Toda conexão é entre dois computadores distintos, e há no máximo uma conexão entre qualquer par de computadores.
+
+## Saída
+
+Se for possível enviar a mensagem, imprima primeiro $k$: o número mínimo de computadores em uma rota válida. Em seguida, imprima um exemplo dessa rota. Qualquer solução válida é aceita.
+
+Se não houver rotas, imprima `IMPOSSIBLE`.
+
+---
+
+# Marco 1 — Modelagem
+
+## Enunciado
+
+O problema consiste em descobrir se é possível enviar uma mensagem de um computador $A$ para um computador $B$ e, caso seja, descobrir o número de computadores no caminho e uma rota válida.
+
+- Origem ($A$): computador $1$ (Uolevi)
+- Destino ($B$): computador $n$ (Maija)
+
+## Entrada
+
+Três informações:
+
+1. $n$ — número de computadores
+2. $m$ — número de conexões
+3. lista de $m$ conexões entre os computadores
+
+## Saída
+
+- $k$: número mínimo de computadores em uma rota válida, seguido de um exemplo de rota
+- se não houver rota válida: `IMPOSSIBLE`
+
+## Restrições
+
+| Parâmetro | Intervalo |
+| --- | --- |
+| número de computadores $n$ | $2 \le n \le 10^5$ |
+| número de conexões $m$ | $1 \le m \le 2 \cdot 10^5$ |
+| extremidades das conexões | $1 \le a, b \le n$ |
+
+$a$ e $b$ são computadores e sempre estão entre $1$ e $n$.
+
+## Modelagem do grafo
+
+| Elemento | Interpretação |
+| --- | --- |
+| Vértices | computadores |
+| Arestas | conexões entre computadores |
+| Tipo de grafo | grafo simples não direcionado: a conexão não é dirigida, não existem laços nem arestas paralelas |
+
+## Instância pequena
+
+```
 n = 5
 m = 5
-[a,b] = [(1,2), (1,3), (1,4), (2,3), (5,4)]
- 
-resultado esperado:
+arestas = [(1, 2), (1, 3), (1, 4), (2, 3), (5, 4)]
+```
+
+```mermaid
+graph LR
+  1 --- 2
+  1 --- 3
+  1 --- 4
+  2 --- 3
+  5 --- 4
+```
+
+### Resultado esperado
+
+```
 3
 1 4 5
+```
 
-hipótese inicial de solução:
-fazer uma busca em largura e checar a existencia de um caminho possivel, escolher o menor;
-BFS BREADTH FIRST SEARCH
-DFS DEPTH FIRST SEARCH
+Rota mínima: $1 \to 4 \to 5$ (3 computadores).
 
+## Hipótese inicial de solução
+
+Fazer uma busca em largura (BFS) e verificar a existência de um caminho possível, escolhendo o menor.
+
+- **BFS** (*Breadth-First Search*): adequada para caminho mínimo em grafo não ponderado
+- **DFS** (*Depth-First Search*): encontra um caminho, mas não garante o mínimo
