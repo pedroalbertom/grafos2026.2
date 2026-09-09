@@ -19,7 +19,6 @@ for edge in range(edges_count):
     # NOTA: a entrada do problema é 1-indexada, então removemos 1 para tornar 0 indexada
     a, b = map(lambda x: int(x) - 1, dataset.readline().split())
     graph.add_edge(a, b)
-    graph.add_edge(b, a)
 
 # realizando o BFS
 bfs = BreadthFirstPaths(graph, 0)
