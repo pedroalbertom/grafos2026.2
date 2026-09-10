@@ -167,7 +167,7 @@ A estrutura escolhida para representar o grafo foi a **Lista de Adjacência** (c
    Armazenar uma matriz de adjacência de ordem $10^5 \times 10^5$ exigiria $10^{10}$ posições. Mesmo usando apenas 1 byte por célula, demandaria aproximadamente $10\text{ GB}$ de memória RAM, violando categoricamente o limite de $512\text{ MB}$ do juiz online. Além disso, percorrer os vizinhos de cada vértice tomaria $O(V)$ por vértice, resultando em complexidade de tempo $O(V^2)$, levando a estouro de tempo (*Time Limit Exceeded*).
 
 3. **Eficiência da Lista de Adjacência:**  
-   Consome memória proporcional a $O(V + E)$, necessitando de cerca de alguns megabytes. Além disso, a iteração sobre os vizinhos de um vértice $v$ custa $O(\operatorname{grau}(v))$, permitindo que a busca em largura execute em tempo estritamente linear $O(V + E)$.
+   Consome memória proporcional a $O(V + E)$, necessitando de cerca de alguns megabytes. Além disso, a iteração sobre os vizinhos de um vértice $v$ custa $O(\text{grau}(v))$, permitindo que a busca em largura execute em tempo estritamente linear $O(V + E)$.
 
 ### 6.2. Medidas Estruturais da Instância de Teste
 Para a instância com $n = 5$ e $m = 5$:
