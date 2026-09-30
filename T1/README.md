@@ -18,7 +18,7 @@
 | Nome Completo | Matrícula | E-mail |
 | :--- | :---: | :--- |
 | **Vinícius Ximenes P. M.** | `2224126` | `viniciusximenespm@gmail.com` |
-| **Daniel Ribeiro** | `1910425` | — |
+| **Daniel Ribeiro** | `1910425` | — | `daniel.ribeiro0833@gmail.com`
 | **Pedro Alberto M. Pontes** | `2216824` | `pedroalbertompontes@gmail.com` |
 
 ---
