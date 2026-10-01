@@ -67,11 +67,14 @@ Devem ser impressos dois inteiros separados por espaço:
 
 ## 3. Estado atual do trabalho
 
-O Marco 1 foi registrado. Neste momento, o repositório contém a modelagem, a classificação do grafo, a relação com DFS/BFS e uma instância pequena rastreada manualmente.
+Os Marcos 1, 2 e 3 foram registrados. O Marco 3 contém a adaptação planejada da referência, a validação manual da instância do colega e a tabela final do rastreamento de Kosaraju. A implementação executável ainda não foi integrada em `T2/src`.
 
 - [Marco 1 — Problema e conhecimento prévio](acompanhamento/marco-1.md)
+- [Marco 2 — Propriedade estrutural](acompanhamento/marco-2.md)
+- [Marco 3 — Adaptação e testes](acompanhamento/marco-3.md)
+- [Tabela final do rastreamento](acompanhamento/tabela_final_kosaraju.md)
 
-Os marcos seguintes ainda não foram produzidos. Implementação, testes completos, evidência de submissão e apresentação serão adicionados somente após o avanço do trabalho.
+O Marco 4 ainda não foi produzido. A implementação, os testes automatizados, a evidência de submissão e a apresentação serão adicionados após o avanço do trabalho.
 
 ---
 
@@ -97,8 +100,9 @@ T2/
 ├── README.md
 ├── acompanhamento/
 │   ├── marco-1.md              # produzido
-│   ├── marco-2.md              # será produzido posteriormente
-│   ├── marco-3.md              # será produzido posteriormente
+│   ├── marco-2.md              # produzido
+│   ├── marco-3.md              # produzido; integração pendente
+│   ├── tabela_final_kosaraju.md # apoio ao rastreamento manual
 │   └── marco-4.md              # será produzido posteriormente
 ├── apresentacao/
 │   └── apresentacao.pdf        # será adicionado posteriormente
@@ -171,32 +175,32 @@ O resultado de aprendizagem aferido é reconhecer que a proteção definida pelo
 
 DFS participa diretamente da hipótese de solução, pois algoritmos como Kosaraju e Tarjan utilizam busca em profundidade para identificar componentes fortemente conexas. Uma DFS comum a partir de uma única origem mostra apenas alcançabilidade em um sentido. BFS pode explorar alcançabilidade, mas não é a busca central, pois o problema não pede caminho mínimo nem níveis.
 
-O critério formal, os estados adicionais da busca e a adaptação da implementação serão registrados nos marcos posteriores, depois do conteúdo teórico correspondente.
+O critério formal e os estados adicionais da busca estão registrados no Marco 2. A adaptação da implementação será feita nos marcos posteriores, depois do conteúdo teórico correspondente.
 
 ---
 
 ## 9. Algoritmo, implementação de referência e adaptações
 
-Ainda não há algoritmo implementado no T2. A hipótese inicial é:
+Ainda não há algoritmo implementado no T2. O critério estrutural foi formalizado no Marco 2, e o Marco 3 registra a escolha de Kosaraju e a hipótese de adaptação:
 
 1. representar o dígrafo com listas de adjacência;
 2. identificar as componentes fortemente conexas com uma estratégia baseada em DFS;
 3. encontrar o menor custo e a quantidade de empates em cada componente;
 4. somar os menores custos e multiplicar as quantidades módulo `1 000 000 007`.
 
-A implementação de referência, as alterações e suas justificativas serão registradas quando a adaptação começar.
+A implementação de referência, as alterações e suas justificativas estão organizadas no Marco 3; a integração efetiva no código ainda será feita.
 
 ---
 
 ## 10. Complexidade
 
-A hipótese inicial é uma solução com tempo `O(n + m)` e memória `O(n + m)`, compatível com os limites da entrada. A análise definitiva será feita após a escolha e a implementação do algoritmo.
+A estratégia escolhida no Marco 3 tem tempo `O(n + m)` e memória `O(n + m)`, compatível com os limites da entrada. A confirmação definitiva será feita após a implementação.
 
 ---
 
 ## 11. Testes e validação
 
-Até o Marco 1, há apenas a instância pequena usada para validar a modelagem e o resultado esperado. Os testes de implementação deverão incluir posteriormente:
+Até o Marco 3, há validações manuais das duas instâncias documentadas. Os testes automatizados deverão incluir posteriormente:
 
 * a instância pequena;
 * uma única componente fortemente conexa;
@@ -227,4 +231,4 @@ A apresentação será preparada posteriormente com foco em:
 
 ## 14. Declaração sobre o uso de Inteligência Artificial
 
-Durante o Marco 1, ferramentas de Inteligência Artificial generativa foram utilizadas como apoio à organização da documentação, à revisão da modelagem e à estruturação do rastreamento da instância pequena. O grupo deverá revisar, validar, compreender e adaptar todo conteúdo e código utilizado nos marcos seguintes, conforme as exigências do trabalho.
+Durante os Marcos 1, 2 e 3, ferramentas de Inteligência Artificial generativa foram utilizadas como apoio à organização da documentação, à revisão da modelagem e à estruturação dos rastreamentos manuais. O grupo deverá revisar, validar, compreender e adaptar todo conteúdo e código utilizado nos marcos seguintes, conforme as exigências do trabalho.
