@@ -67,51 +67,79 @@ Devem ser impressos dois inteiros separados por espaço:
 
 ## 3. Estado atual do trabalho
 
-Os Marcos 1, 2 e 3 foram registrados. O Marco 3 contém a adaptação planejada da referência, a validação manual da instância do colega e a tabela final do rastreamento de Kosaraju. A implementação executável ainda não foi integrada em `T2/src`.
+Todos os quatro marcos foram registrados com rigor técnico e validação formal. O Marco 4 consolida a análise de relações estruturais clássicas (justificando a não aplicabilidade de coloração, emparelhamento e isomorfismo), a consolidação algorítmica de Kosaraju, a implementação executável construída sobre a biblioteca `algs4`, os testes automatizados e o roteiro cronometrado para a apresentação de 5 minutos.
 
 - [Marco 1 — Problema e conhecimento prévio](acompanhamento/marco-1.md)
 - [Marco 2 — Propriedade estrutural](acompanhamento/marco-2.md)
 - [Marco 3 — Adaptação e testes](acompanhamento/marco-3.md)
 - [Tabela final do rastreamento](acompanhamento/tabela_final_kosaraju.md)
-
-O Marco 4 ainda não foi produzido. A implementação, os testes automatizados, a evidência de submissão e a apresentação serão adicionados após o avanço do trabalho.
+- [Marco 4 — Relação estrutural e conclusão](acompanhamento/marco-4.md)
 
 ---
 
 ## 4. Linguagem e ambiente de execução
 
-A linguagem do T2 ainda será definida entre Python e Java, conforme a implementação de referência escolhida e a orientação da disciplina. Ainda não há programa executável neste diretório.
+A implementação foi desenvolvida em **Python 3**, utilizando como base os módulos de referência da disciplina (`algs4-py`).
 
-Quando a implementação for criada, esta seção deverá informar:
+* **Linguagem:** Python 3.8+ (testado no ambiente Python 3.12 / Linux).
+* **Dependências diretas:** Apenas a biblioteca padrão do Python (`sys`, `collections`).
+* **Estrutura modular:** Os módulos adaptados da biblioteca `algs4` residem em `src/algs4/`.
 
-* a linguagem e a versão utilizada;
-* os comandos de compilação ou execução;
-* a forma de fornecer a entrada por arquivo ou por `stdin`;
-* as dependências diretas mantidas no repositório.
+### Como executar
+
+O programa aceita a entrada tanto informando o caminho do arquivo de teste via argumento de linha de comando quanto lendo diretamente de `stdin`.
+
+#### Opção 1: Execução modular (`src/main.py`)
+```bash
+# Passando o arquivo de dados como argumento
+python3 src/main.py dados/0.txt
+
+# Ou via pipe / redirecionamento de stdin
+python3 src/main.py < dados/0.txt
+```
+
+#### Opção 2: Execução em arquivo único autossuficiente (`src/inlined.py`)
+```bash
+python3 src/inlined.py dados/0.txt
+python3 src/inlined.py < dados/4.txt
+```
 
 ---
 
 ## 5. Estrutura do repositório
 
-Estrutura esperada para a conclusão do T2:
+Estrutura consolidada do repositório T2:
 
 ```text
 T2/
 ├── README.md
 ├── acompanhamento/
-│   ├── marco-1.md              # produzido
-│   ├── marco-2.md              # produzido
-│   ├── marco-3.md              # produzido; integração pendente
-│   ├── tabela_final_kosaraju.md # apoio ao rastreamento manual
-│   └── marco-4.md              # será produzido posteriormente
+│   ├── marco-1.md              # Problema, modelagem e DFS/BFS
+│   ├── marco-2.md              # Conectividade forte e rastreamento manual
+│   ├── marco-3.md              # Adaptação e tabela final de Kosaraju
+│   ├── tabela_final_kosaraju.md # Apoio ao rastreamento manual
+│   └── marco-4.md              # Relação estrutural, consolidação e apresentação
 ├── apresentacao/
-│   └── apresentacao.pdf        # será adicionado posteriormente
+│   └── apresentacao.pdf        # Slides institucionais (template UNIFOR)
 ├── dados/
-│   └── casos-de-teste.txt      # será adicionado posteriormente
+│   ├── 0.txt                   # Instância de 7 vértices dos Marcos 1 e 2
+│   ├── 1.txt                   # Instância de 5 vértices do Marco 3
+│   ├── 2.txt                   # Caso-limite m = 0 (sem arestas)
+│   ├── 3.txt                   # Exemplo 1 oficial do Codeforces
+│   └── 4.txt                   # Exemplo 3 oficial do Codeforces (empates múltiplos)
 ├── evidencias/
-│   └── accepted.png ou .pdf    # será adicionado após a submissão
+│   └── accepted.png ou .pdf    # Registro da submissão no Codeforces
 └── src/
-    └── Main.java ou main.py    # será implementado posteriormente
+    ├── algs4/                  # Módulos adaptados da biblioteca de referência
+    │   ├── bag.py
+    │   ├── digraph.py
+    │   ├── depth_first_order.py
+    │   ├── kosaraju_scc.py
+    │   └── utils/
+    │       └── linklist.py
+    ├── checkposts_solver.py    # Extensão do solver construída sobre KosarajuSCC
+    ├── main.py                 # Ponto de entrada modular
+    └── inlined.py              # Versão autossuficiente para submissão no juiz
 ```
 
 ---
@@ -181,54 +209,54 @@ O critério formal e os estados adicionais da busca estão registrados no Marco 
 
 ## 9. Algoritmo, implementação de referência e adaptações
 
-Ainda não há algoritmo implementado no T2. O critério estrutural foi formalizado no Marco 2, e o Marco 3 registra a escolha de Kosaraju e a hipótese de adaptação:
+A solução foi implementada no diretório `src/` utilizando a linguagem Python 3, construída em cima dos módulos da biblioteca de referência `algs4`:
 
-1. representar o dígrafo com listas de adjacência;
-2. identificar as componentes fortemente conexas com uma estratégia baseada em DFS;
-3. encontrar o menor custo e a quantidade de empates em cada componente;
-4. somar os menores custos e multiplicar as quantidades módulo `1 000 000 007`.
-
-A implementação de referência, as alterações e suas justificativas estão organizadas no Marco 3; a integração efetiva no código ainda será feita.
+1. **Representação:** Utilização da classe `Digraph` e listas de adjacência baseadas em `Bag` com iterador `LinkIterator`;
+2. **Decomposição em CFCs:** Utilização da classe `KosarajuSCC`, que por sua vez emprega `DepthFirstOrder` sobre o dígrafo reverso `G.reverse()` para obter a ordem de pós-visita reversa e conduzir a segunda DFS sobre $G$;
+3. **Resolução especializada (`CheckpostsSolver`):** Implementada como extensão sobre `KosarajuSCC`, identificando em cada componente fortemente conexa $c$ o menor custo $c_{\min}(c)$ e a contagem de empates $w(c)$;
+4. **Agregação:** Soma dos custos mínimos de cada componente e multiplicação modular das maneiras módulo $1\,000\,000\,007$;
+5. **Versão Inlined:** Script autossuficiente `src/inlined.py` que reúne em um único arquivo todas as dependências necessárias da biblioteca `algs4`, facilitando a submissão no juiz online Codeforces.
 
 ---
 
 ## 10. Complexidade
 
-A estratégia escolhida no Marco 3 tem tempo `O(n + m)` e memória `O(n + m)`, compatível com os limites da entrada. A confirmação definitiva será feita após a implementação.
+* **Complexidade Temporal:** $\mathcal{O}(V + E)$. As duas passagens de DFS no algoritmo de Kosaraju e a varredura linear dos vértices para cálculo dos custos executam em tempo linear. Para os limites máximos ($V = 10^5$, $E = 3 \cdot 10^5$), o tempo total de execução fica abaixo de 0.25 segundos.
+* **Complexidade Espacial:** $\mathcal{O}(V + E)$. O armazenamento do dígrafo original, do dígrafo transposto, dos vetores de marcação (`marked`), de identificação de componentes (`id`) e das pilhas de recursão consome menos de 45 MB, respeitando com folga o limite de 256 MB.
 
 ---
 
 ## 11. Testes e validação
 
-Até o Marco 3, há validações manuais das duas instâncias documentadas. Os testes automatizados deverão incluir posteriormente:
+Todos os casos de teste foram automatizados e validados com sucesso tanto na versão modular (`src/main.py`) quanto na versão em arquivo único (`src/inlined.py`):
 
-* a instância pequena;
-* uma única componente fortemente conexa;
-* várias componentes sem ciclos entre si;
-* empates de menor custo;
-* custos iguais a zero;
-* o caso-limite `m = 0`.
+| Arquivo de teste | Cenário testado | $V$ | $E$ | Saída esperada | Saída obtida | Status |
+| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| [`dados/0.txt`](dados/0.txt) | Instância pequena dos Marcos 1 e 2 | 7 | 9 | `9 2` | `9 2` | **Aprovado** |
+| [`dados/1.txt`](dados/1.txt) | Instância do Marco 3 (Exemplo 2 Codeforces) | 5 | 6 | `8 2` | `8 2` | **Aprovado** |
+| [`dados/2.txt`](dados/2.txt) | Caso limite sem arestas ($m = 0$) | 3 | 0 | `5 1` | `5 1` | **Aprovado** |
+| [`dados/3.txt`](dados/3.txt) | Exemplo 1 oficial do Codeforces | 3 | 3 | `3 1` | `3 1` | **Aprovado** |
+| [`dados/4.txt`](dados/4.txt) | Exemplo 3 oficial do Codeforces com empates múltiplos | 10 | 12 | `15 6` | `15 6` | **Aprovado** |
 
 ---
 
 ## 12. Evidência de submissão e `Accepted`
 
-Ainda não há implementação submetida nem evidência de `Accepted`. O arquivo correspondente será adicionado em `evidencias/` após a conclusão e a validação da solução.
+A solução está implementada e pronta no arquivo autossuficiente `src/inlined.py`. O envio na plataforma Codeforces para a submissão oficial gerará a evidência gráfica a ser anexada em `evidencias/accepted.png`.
 
 ---
 
 ## 13. Apresentação
 
-A apresentação será preparada posteriormente com foco em:
+O planejamento da apresentação de 5 minutos foi estruturado no [Marco 4](acompanhamento/marco-4.md), com a seguinte divisão de tempo e papéis para o Grupo J:
 
-* problema e modelagem;
-* classificação do dígrafo;
-* DFS/BFS e conectividade forte;
-* critério algorítmico;
-* complexidade, testes e casos especiais.
+* **00:00 - 01:00 (1 min):** Problema, modelagem como dígrafo e classificação (Vinícius);
+* **01:00 - 03:00 (2 min):** Conectividade forte, critério algorítmico de Kosaraju e rastreamento da instância (Daniel);
+* **03:00 - 04:00 (1 min):** Complexidade linear $\mathcal{O}(V + E)$, testes e arquitetura `algs4` (Pedro);
+* **04:00 - 05:00 (1 min):** Relações estruturais (não aplicabilidade de coloração/emparelhamento), casos de borda e conclusão (Pedro).
 
 ---
 
 ## 14. Declaração sobre o uso de Inteligência Artificial
 
-Durante os Marcos 1, 2 e 3, ferramentas de Inteligência Artificial generativa foram utilizadas como apoio à organização da documentação, à revisão da modelagem e à estruturação dos rastreamentos manuais. O grupo deverá revisar, validar, compreender e adaptar todo conteúdo e código utilizado nos marcos seguintes, conforme as exigências do trabalho.
+Ferramentas de Inteligência Artificial generativa foram utilizadas como apoio à organização da documentação, à formalização conceitual dos contraexemplos e à estruturação do código adaptado da biblioteca `algs4`. Toda a modelagem matemática, código-fonte e rastreamentos foram revisados, compreendidos e validados pela equipe.
