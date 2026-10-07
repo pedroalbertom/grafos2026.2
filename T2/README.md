@@ -136,9 +136,7 @@ T2/
     │   ├── depth_first_order.py
     │   ├── kosaraju_scc.py
     │   └── utils/
-    │       └── linklist.py
-    ├── checkposts_solver.py    # Extensão do solver construída sobre KosarajuSCC
-    ├── main.py                 # Ponto de entrada modular
+    ├── main.py                 # Ponto de entrada modular usando KosarajuSCC adaptada
     └── inlined.py              # Versão autossuficiente para submissão no juiz
 ```
 
@@ -212,10 +210,9 @@ O critério formal e os estados adicionais da busca estão registrados no Marco 
 A solução foi implementada no diretório `src/` utilizando a linguagem Python 3, construída em cima dos módulos da biblioteca de referência `algs4`:
 
 1. **Representação:** Utilização da classe `Digraph` e listas de adjacência baseadas em `Bag` com iterador `LinkIterator`;
-2. **Decomposição em CFCs:** Utilização da classe `KosarajuSCC`, que por sua vez emprega `DepthFirstOrder` sobre o dígrafo reverso `G.reverse()` para obter a ordem de pós-visita reversa e conduzir a segunda DFS sobre $G$;
-3. **Resolução especializada (`CheckpostsSolver`):** Implementada como extensão sobre `KosarajuSCC`, identificando em cada componente fortemente conexa $c$ o menor custo $c_{\min}(c)$ e a contagem de empates $w(c)$;
-4. **Agregação:** Soma dos custos mínimos de cada componente e multiplicação modular das maneiras módulo $1\,000\,000\,007$;
-5. **Versão Inlined:** Script autossuficiente `src/inlined.py` que reúne em um único arquivo todas as dependências necessárias da biblioteca `algs4`, facilitando a submissão no juiz online Codeforces.
+2. **Decomposição em CFCs:** Utilização da classe `KosarajuSCC`, que emprega `DepthFirstOrder` sobre o dígrafo reverso `G.reverse()` para obter a ordem de pós-visita reversa e conduzir a segunda DFS sobre $G$;
+3. **Adaptação interna de `KosarajuSCC`:** A própria classe de referência foi adaptada diretamente para receber a lista de custos dos vértices e processar, logo após a identificação das componentes, o menor custo $c_{\min}(c)$ e a contagem de empates $w(c)$ de cada componente, expondo diretamente os atributos `min_cost` e `ways` (módulo $1\,000\,000\,007$), sem a necessidade de classes envoltórias externas;
+4. **Versão Inlined:** Script autossuficiente `src/inlined.py` que reúne em um único arquivo todas as dependências necessárias adaptadas da biblioteca `algs4`, facilitando a submissão no juiz online Codeforces.
 
 ---
 

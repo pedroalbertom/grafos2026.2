@@ -137,12 +137,12 @@ Seja $\mathcal{C} = \{C_1, C_2, \dots, C_k\}$ a partição dos vértices $V$ em 
 
 ## 5. Implementação sobre a biblioteca `algs4` e casos de teste
 
-A solução foi estruturada no diretório `T2/src/` com base nas classes da biblioteca de referência:
+A solução foi estruturada no diretório `T2/src/` por meio da adaptação direta dos módulos da biblioteca de referência da disciplina:
 
-* `algs4/bag.py`, `algs4/digraph.py`, `algs4/depth_first_order.py`, `algs4/kosaraju_scc.py`: módulos da biblioteca oficial;
-* `checkposts_solver.py`: classe `CheckpostsSolver`, que recebe o `Digraph` e a lista de custos, invoca o `KosarajuSCC` e realiza a agregação modular dos custos;
-* `main.py`: script de execução modular que aceita arquivo via argumento ou fluxo de `stdin`;
-* `inlined.py`: versão autossuficiente em arquivo único, pronta para submissão direta no Codeforces.
+* `algs4/bag.py`, `algs4/digraph.py`, `algs4/depth_first_order.py`: estruturas base de lista de adjacência e pós-ordem da DFS;
+* `algs4/kosaraju_scc.py`: classe `KosarajuSCC` adaptada internamente para receber o dígrafo e os custos dos vértices, calculando diretamente os atributos `min_cost` e `ways` (módulo $1\,000\,000\,007$) a partir das componentes fortemente conexas identificadas, sem necessidade de classes externas envoltórias;
+* `main.py`: ponto de entrada modular que instancia `Digraph` e `KosarajuSCC(graph, costs)`, aceitando arquivo via argumento ou fluxo de `stdin`;
+* `inlined.py`: versão autossuficiente em arquivo único contendo as estruturas essenciais adaptadas da `algs4`, pronta para submissão direta no Codeforces.
 
 ### Resultados dos testes práticos executados
 

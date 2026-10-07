@@ -4,7 +4,7 @@ import sys
 sys.setrecursionlimit(300000)
 
 from algs4.digraph import Digraph
-from checkposts_solver import CheckpostsSolver
+from algs4.kosaraju_scc import KosarajuSCC
 
 
 def main():
@@ -28,9 +28,8 @@ def main():
         v = int(next(it)) - 1
         graph.add_edge(u, v)
 
-    solver = CheckpostsSolver(graph, costs)
-    min_cost, ways = solver.result()
-    print(f"{min_cost} {ways}")
+    scc = KosarajuSCC(graph, costs)
+    print(f"{scc.min_cost} {scc.ways}")
 
 
 if __name__ == "__main__":

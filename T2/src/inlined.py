@@ -1,7 +1,8 @@
 """
 Solução autossuficiente (inlined) para o Codeforces 427C — Checkposts.
-Contém as estruturas essenciais adaptadas da biblioteca algs4 (Bag, Digraph,
-DepthFirstOrder e KosarajuSCC) e o resolvedor CheckpostsSolver em um único arquivo.
+Contém as estruturas adaptadas da biblioteca algs4 (Bag, Digraph,
+DepthFirstOrder e KosarajuSCC) em um único arquivo, com a adaptação de
+custos e combinações incorporada diretamente na classe KosarajuSCC.
 """
 from collections import deque
 import sys
@@ -97,16 +98,22 @@ class DepthFirstOrder:
 
 class KosarajuSCC:
 
-    def __init__(self, G):
+    def __init__(self, G, costs=None):
         self.marked = [False for _ in range(G.V)]
         self.id = [0 for _ in range(G.V)]
         self.count = 0
+        self.costs = costs
+        self.min_cost = 0
+        self.ways = 1
 
         order = DepthFirstOrder(G.reverse())
         for v in order.reverse_post():
             if not self.marked[v]:
                 self.dfs(G, v)
                 self.count += 1
+
+        if costs is not None:
+            self._compute_costs()
 
     def dfs(self, G, v):
         self.marked[v] = True
@@ -115,30 +122,21 @@ class KosarajuSCC:
             if not self.marked[w]:
                 self.dfs(G, w)
 
+    def strongly_connected(self, v, w):
+        return self.id[v] == self.id[w]
 
-class CheckpostsSolver:
-
-    def __init__(self, digraph, costs):
-        self.digraph = digraph
-        self.costs = costs
-        self.scc = KosarajuSCC(digraph)
-        self.min_cost = 0
-        self.ways = 1
-        self._solve()
-
-    def _solve(self):
-        num_components = self.scc.count
-        if num_components == 0:
+    def _compute_costs(self):
+        if self.count == 0:
             self.min_cost = 0
             self.ways = 1
             return
 
         INF = float('inf')
-        min_comp_cost = [INF] * num_components
-        ways_comp = [0] * num_components
+        min_comp_cost = [INF] * self.count
+        ways_comp = [0] * self.count
 
-        for v in range(self.digraph.V):
-            c_id = self.scc.id[v]
+        for v in range(len(self.marked)):
+            c_id = self.id[v]
             c_val = self.costs[v]
             if c_val < min_comp_cost[c_id]:
                 min_comp_cost[c_id] = c_val
@@ -149,15 +147,12 @@ class CheckpostsSolver:
         total_cost = 0
         total_ways = 1
 
-        for c_id in range(num_components):
-            total_cost += min_comp_cost[c_id]
-            total_ways = (total_ways * ways_comp[c_id]) % MOD
+        for c in range(self.count):
+            total_cost += min_comp_cost[c]
+            total_ways = (total_ways * ways_comp[c]) % MOD
 
         self.min_cost = total_cost
         self.ways = total_ways
-
-    def result(self):
-        return self.min_cost, self.ways
 
 
 def main():
@@ -181,9 +176,8 @@ def main():
         v = int(next(it)) - 1
         graph.add_edge(u, v)
 
-    solver = CheckpostsSolver(graph, costs)
-    min_cost, ways = solver.result()
-    print(f"{min_cost} {ways}")
+    scc = KosarajuSCC(graph, costs)
+    print(f"{scc.min_cost} {scc.ways}")
 
 
 if __name__ == "__main__":
