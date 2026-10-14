@@ -239,7 +239,20 @@ Todos os casos de teste foram automatizados e validados com sucesso tanto na ver
 
 ## 12. Evidência de submissão e `Accepted`
 
-A solução está implementada e pronta no arquivo autossuficiente `src/inlined.py`. O envio na plataforma Codeforces para a submissão oficial gerará a evidência gráfica a ser anexada em `evidencias/accepted.png`.
+A solução implementada em `src/inlined.py` foi submetida ao **Codeforces** para o problema **427C — Checkposts**, obtendo o veredito **ACCEPTED** em todos os casos de teste da plataforma.
+
+<div align="center">
+  <img src="evidencias/accepted.png" alt="Evidência do Accepted no Codeforces" width="700">
+</div>
+
+### Detalhes da Submissão
+* **ID da Submissão:** `394596808`
+* **Problema:** [Codeforces 427C — Checkposts](https://codeforces.com/problemset/problem/427/C)
+* **Usuário:** `pedroalbertom`
+* **Linguagem:** Python 3
+* **Veredito:** **ACCEPTED**
+* **Tempo de Execução:** $1953\text{ ms}$ (dentro do limite de $2000\text{ ms}$)
+* **Memória Utilizada:** $148.900\text{ KB}$ (dentro do limite de $256\text{ MB}$)
 
 ---
 

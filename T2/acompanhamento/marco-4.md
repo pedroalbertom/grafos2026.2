@@ -156,6 +156,10 @@ Todos os casos de teste foram validados com sucesso por meio de execução autom
 | [`dados/3.txt`](../dados/3.txt) | Exemplo 1 oficial do Codeforces | 3 | 3 | `3 1` | **Aprovado** |
 | [`dados/4.txt`](../dados/4.txt) | Exemplo 3 oficial do Codeforces com empates | 10 | 12 | `15 6` | **Aprovado** |
 
+### Veredito oficial no Codeforces
+
+A solução autossuficiente `src/inlined.py` foi submetida ao **Codeforces** (Submissão `#394596808`), obtendo o veredito **`Accepted`** em todos os testes oficiais (tempo: $1953\text{ ms}$, memória: $148.9\text{ MB}$), dentro de todos os limites estipulados. O registro comprobatório foi anexado em [`../evidencias/accepted.png`](../evidencias/accepted.png).
+
 ---
 
 ## 6. Roteiro e ensaio da apresentação de 5 minutos
@@ -212,4 +216,5 @@ gantt
 Com o cumprimento do Marco 4:
 * Os fundamentos matemáticos de conectividade forte e a não aplicabilidade dos demais problemas clássicos estão formalmente justificados;
 * A implementação modular e autossuficiente baseada na biblioteca `algs4` está concluída e validada em todos os casos de teste;
+* O veredito **`Accepted`** foi conquistado no Codeforces (Submissão `#394596808`) com comprovação arquivada em `evidencias/accepted.png`;
 * A equipe dispõe de roteiro estruturado e cronometrado para a apresentação final da AP2.
