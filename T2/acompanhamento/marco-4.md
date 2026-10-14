@@ -201,13 +201,15 @@ gantt
 * **Pedro Alberto M. Pontes:** Análise de complexidade, extensão da biblioteca `algs4`, justificativa da não aplicabilidade dos problemas clássicos (coloração/emparelhamento) e fechamento.
 
 ### 6.3. Checklist para os slides (Template Institucional UNIFOR)
-- [ ] Slide 1: Capa oficial com logo da UNIFOR, disciplina, grupo e identificação do problema.
-- [ ] Slide 2: Problema contextualizado, entrada, saída e modelagem como dígrafo ponderado nos vértices.
-- [ ] Slide 3: Propriedade estrutural central (Conectividade Forte) e decomposição em componentes.
-- [ ] Slide 4: Algoritmo de Kosaraju e diagrama de rastreamento com $G$ e $G^R$.
-- [ ] Slide 5: Agregação ótima de custos, princípio multiplicativo modular ($\pmod{10^9+7}$) e complexidade linear $\mathcal{O}(V + E)$.
-- [ ] Slide 6: Quadro comparativo de relações estruturais (por que não usar coloração ou emparelhamento).
-- [ ] Slide 7: Resultados dos testes, evidência de execução e encerramento.
+- [x] Slide 1: Capa oficial com logo da UNIFOR, disciplina, grupo e identificação do problema.
+- [x] Slide 2: Problema contextualizado, entrada, saída e modelagem como dígrafo ponderado nos vértices.
+- [x] Slide 3: Propriedade estrutural central (Conectividade Forte) e decomposição em componentes.
+- [x] Slide 4: Algoritmo de Kosaraju e diagrama de rastreamento com $G$ e $G^R$.
+- [x] Slide 5: Agregação ótima de custos, princípio multiplicativo modular ($\pmod{10^9+7}$) e complexidade linear $\mathcal{O}(V + E)$.
+- [x] Slide 6: Quadro comparativo de relações estruturais (por que não usar coloração ou emparelhamento).
+- [x] Slide 7: Resultados dos testes, evidência de execução e encerramento.
+
+Os slides finais da apresentação foram elaborados no template institucional da UNIFOR e estão arquivados em [`../apresentacao/apresentacao.pdf`](../apresentacao/apresentacao.pdf).
 
 ---
 

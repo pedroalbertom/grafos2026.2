@@ -265,6 +265,8 @@ O planejamento da apresentação de 5 minutos foi estruturado no [Marco 4](acomp
 * **03:00 - 04:00 (1 min):** Complexidade linear $\mathcal{O}(V + E)$, testes e arquitetura `algs4` (Pedro);
 * **04:00 - 05:00 (1 min):** Relações estruturais (não aplicabilidade de coloração/emparelhamento), casos de borda e conclusão (Pedro).
 
+Os slides oficiais da apresentação em formato PDF estão disponíveis em [`apresentacao/apresentacao.pdf`](apresentacao/apresentacao.pdf).
+
 ---
 
 ## 14. Declaração sobre o uso de Inteligência Artificial
