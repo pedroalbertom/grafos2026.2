@@ -1,8 +1,8 @@
-# Problema — CSES 1711 Distinct Routes
+# Marco 1 — Formulação
 
-- **Trabalho:** T3 — Fluxo em redes e emparelhamento
+- **Trabalho:** T3 — Otimização em grafos ponderados e redes (Classe: Fluxo máximo)
+- **Problema:** D* — CSES 1711 Distinct Routes
 - **Link oficial:** <https://cses.fi/problemset/task/1711>
-- **Marco:** 1 — Problema e conhecimento prévio
 
 ## 1. Resumo do problema
 
@@ -10,64 +10,42 @@ Um jogo possui `n` salas conectadas por `m` teletransportadores de mão única. 
 
 O objetivo é jogar o maior número possível de dias, onde em cada dia o jogador começa na sala `1` e precisa chegar à sala `n` usando uma sequência válida de teletransportadores disponíveis.
 
-Além de determinar o número máximo de dias `k`, é necessário imprimir `k` rotas válidas (sequências de salas de `1` até `n`) que sejam **aresta-disjuntas** entre si, isto é, nenhum teletransportador aparece em mais de uma rota.
+Além de determinar o número máximo de dias `k`, é necessário imprimir `k` rotas válidas (sequências de salas de `1` até `n`) que sejam **aresta-disjuntas** entre si, isto é, nenhum teletransportador pode aparecer em mais de uma rota.
 
-## 2. Entrada
+## 2. Entrada, saída, objetivo e restrições
 
-A entrada é formada por:
+### Entrada
+1. Dois inteiros `n` e `m`: número de salas e número de teletransportadores.
+2. `m` linhas seguintes com dois inteiros `a` e `b`: um teletransportador de mão única da sala `a` para a sala `b`.
 
-1. dois inteiros `n` e `m`, representando o número de salas e o número de teletransportadores;
-2. `m` linhas seguintes, cada uma com dois inteiros `a` e `b`, indicando um teletransportador de mão única da sala `a` para a sala `b`.
-
-As salas são numeradas de `1` a `n`.
-
-## 3. Saída
-
-Devem ser impressos:
-
-1. um inteiro `k`: o número máximo de dias (rotas aresta-disjuntas de `1` até `n`);
-2. para cada uma das `k` rotas:
+### Saída
+1. Um inteiro `k`: o número máximo de dias (rotas aresta-disjuntas de `1` até `n`).
+2. Para cada uma das `k` rotas:
    - uma linha com um inteiro `L` (quantidade de salas na rota);
-   - uma linha com os `L` inteiros representando as salas visitadas na ordem, começando em `1` e terminando em `n`.
+   - uma linha com os `L` inteiros das salas visitadas na ordem, começando em `1` e terminando em `n`.
 
-Caso existam múltiplas soluções válidas com `k` rotas, qualquer uma é aceita.
+### Objetivo
+Maximizar `k` (quantidade de caminhos aresta-disjuntos de `1` até `n`) e reconstruir `k` caminhos válidos sem reutilizar arestas.
 
-## 4. Restrições
-
+### Restrições
 | Parâmetro | Restrição |
 | --- | --- |
 | `n` | `2 ≤ n ≤ 500` |
 | `m` | `1 ≤ m ≤ 1000` |
 | teletransportador | `1 ≤ a, b ≤ n` |
 | arestas paralelas | podem existir múltiplos teletransportadores entre o mesmo par `(a, b)` |
+| tempo / memória | `1.00 s` / `512 MB` |
 
-O limite de tempo é de `1.00 s` e o limite de memória é de `512 MB`. Com `n ≤ 500` e `m ≤ 1000`, algoritmos de fluxo máximo como Edmonds-Karp (`O(V · E²)`) executam confortavelmente dentro do limite.
+## 3. Definição de vértices, arestas, direção e capacidades
 
-## 5. Modelagem dos vértices e das arestas
-
-Modelamos a instância como uma rede de fluxo dirigida `G = (V, E)` com fonte `s = 1` e sorvedouro `t = n`:
-
-| Elemento | Interpretação |
+| Elemento | Definição |
 | --- | --- |
-| Vértice `v` | sala `v` |
-| Vértice `1` | fonte `s` (início de cada rota) |
-| Vértice `n` | sorvedouro `t` (destino de cada rota) |
-| Aresta dirigida `(a, b)` | teletransportador de `a` para `b` com capacidade `c(a, b) = 1` |
+| **Vértices (`V`)** | Salas `1, 2, ..., n`, sendo `s = 1` a fonte e `t = n` o sorvedouro |
+| **Arestas (`E`)** | Teletransportadores `(a, b)` |
+| **Direção** | **Dirigido** (teletransportadores são de mão única: `a → b`) |
+| **Capacidades** | **Capacidade unitária `c(a, b) = 1`** em cada aresta, pois cada teletransportador pode ser usado no máximo uma vez |
 
-Como cada teletransportador pode ser usado no máximo uma vez, atribuímos **capacidade unitária (`1`)** a cada aresta dirigida. Pelo teorema do corte mínimo e fluxo máximo (e pela integralidade das capacidades), o valor do fluxo máximo de `1` até `n` é exatamente igual ao número máximo de caminhos aresta-disjuntos de `1` até `n`.
-
-## 6. Classificação do grafo
-
-O grafo é:
-
-- **dirigido**, pois os teletransportadores funcionam em uma única direção;
-- **possivelmente multigrafo**, pois o enunciado não proíbe múltiplos teletransportadores entre o mesmo par `(a, b)`;
-- **capacitado (capacidade unitária)** nas arestas, pois cada aresta suporta fluxo máximo `1`;
-- **não ponderado nos vértices**, pois não há restrição de capacidade nas salas (uma mesma sala intermediária pode ser visitada em dias diferentes).
-
-## 7. Instância de exemplo (Marco 1)
-
-Utilizaremos a instância oficial do enunciado:
+## 4. Instância pequena
 
 ```text
 6 7
@@ -80,8 +58,4 @@ Utilizaremos a instância oficial do enunciado:
 5 6
 ```
 
-Nessa instância:
-
-- há `n = 6` salas e `m = 7` teletransportadores;
-- existem dois caminhos aresta-disjuntos de `1` até `6`: `1 → 2 → 6` e `1 → 3 → 4 → 6` (ou `1 → 3 → 5 → 6`);
-- portanto, a resposta ótima é `k = 2`.
+Nesta instância (`n = 6`, `m = 7`), existem `k = 2` rotas aresta-disjuntas possíveis de `1` até `6` (por exemplo, `1 → 2 → 6` e `1 → 3 → 4 → 6`).
